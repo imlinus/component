@@ -1,43 +1,142 @@
-# Lily.js
+# Component Framework
 
-This is just my Hobby UI framework, not done by a long shot :P
+A tiny (~30 KB), zero-dependency reactive UI framework with a React-like hooks API, cooperative scheduling, and native generator-based diffing. Built for the modern browser — **no build steps or bundlers required.**
 
-Example: https://codepen.io/imlinus/pen/abzJwVw
+## Quick Start
 
-```js
-import Lily from '//unpkg.com/lily'
-import HelloWorld from './hello-world.js'
+```javascript
+import { html, Component, useState, useEffect, functional, mount } from '//js.imlin.us/component/index.js'
+```
 
-class App extends Lily.Component {
-  state () {
-    return {
-      title: 'Hello, World.'
-    }
-  }
+## Examples
 
-  components () {
-    return {
-      HelloWorld
-    }
-  }
+### 1. Stateful Class Component
 
-  template () {
-    const { title } = this.$state
+```javascript
+import { Component, html, useState, mount } from '//js.imlin.us/component'
 
-    return /* html */`
-      <div>
-        <h1>{{ title }}</h1>
-        <input model="title" />
+class Counter extends Component {
+  render() {
+    const [count, setCount] = useState(0)
 
-        <hello-world></hello-world>
+    return html`
+      <div class="card">
+        <h2>Count: ${count}</h2>
+        <button onclick=${() => setCount(c => c + 1)}>Increment</button>
       </div>
     `
   }
 }
 
-Lily.mount(App)
+mount(Counter, '#app')
 ```
 
-Cheers
+### 2. Functional Components with Hooks
 
-[![js-standard-style](https://cdn.rawgit.com/standard/standard/master/badge.svg)](http://standardjs.com)
+```javascript
+import { html, functional, useState } from '//js.imlin.us/component'
+
+const Greeting = functional(({ name }) => {
+  const [excited, setExcited] = useState(false)
+
+  return html`
+    <div>
+      <span>Hello, ${name}${excited ? '!' : '.'}</span>
+      <button onclick=${() => setExcited(!excited)}>Toggle</button>
+    </div>
+  `
+})
+
+// Use it inside another component automatically:
+class App extends Component {
+  render() {
+    return html`
+      <main>
+        ${Greeting({ name: 'World' })}
+      </main>
+    `
+  }
+}
+```
+
+### 3. Arrays and Keyed DOM Elements
+
+Use `data-key` inside `map()` so the underlying VDOM patcher perfectly tracks and re-orders instances instead of tearing them down.
+
+```javascript
+class TodoList extends Component {
+  render() {
+    const [todos, setTodos] = useState([
+      { id: 1, text: 'Learn framework' },
+      { id: 2, text: 'Build app' }
+    ])
+
+    const deleteTodo = (id) => setTodos(todos.filter(t => t.id !== id))
+
+    return html`
+      <ul>
+        ${todos.map(todo => html`
+          <li data-key="${todo.id}">
+            <span>${todo.text}</span>
+            <button onclick=${() => deleteTodo(todo.id)}>Delete</button>
+          </li>
+        `)}
+      </ul>
+    `
+  }
+}
+```
+
+### 4. Forms and Event Handlers
+
+Supported native auto-delegated events: `onclick`, `onchange`, `oninput`, `onsubmit`, `onkeydown`, `onkeyup`. Keep it lowercase exactly like native DOM attributes.
+
+```javascript
+class SearchForm extends Component {
+  render() {
+    const [query, setQuery] = useState('')
+
+    const handleSubmit = (e) => {
+      e.preventDefault()
+      alert(`Searching for: ${query}`)
+    }
+
+    return html`
+      <form onsubmit=${handleSubmit}>
+        <input 
+          value="${query}" 
+          oninput=${(e) => setQuery(e.target.value)} 
+          placeholder="Search..."
+        />
+        <button type="submit">Go</button>
+      </form>
+    `
+  }
+}
+```
+
+### 5. Side-effects (useEffect)
+
+```javascript
+import { Component, html, useEffect, useState } from '//js.imlin.us/component/index.js'
+
+class Clock extends Component {
+  render() {
+    const [time, setTime] = useState(new Date().toLocaleTimeString())
+
+    useEffect(() => {
+      const timer = setInterval(() => {
+        setTime(new Date().toLocaleTimeString())
+      }, 1000)
+      
+      return () => clearInterval(timer) // cleanup triggers before unmount/re-effect
+    }, [])
+
+    return html`<h3>${time}</h3>`
+  }
+}
+```
+
+---
+
+Made with 💜 by and for imlin.us. But feel free to use it!

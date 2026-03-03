@@ -1,20 +1,209 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en">
 <head>
-  <title>ToDo</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToDo App</title>
 
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.8.0/css/bulma.min.css" />
-
-  <script>document.documentElement.className = 'js'</script>
+  <link rel="stylesheet" href="https://css.imlin.us/stylesheet.css">
+  
+  <style>
+    body {
+      background: #0f0f13;
+      color: #fff;
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      justify-content: center;
+      padding-top: 50px;
+    }
+    
+    .todo-container {
+      width: 100%;
+      max-width: 500px;
+      background: #1a1a24;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    
+    .todo-header {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .todo-header h1 {
+      margin: 0;
+      color: #ff0055;
+    }
+    
+    .todo-form {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .todo-input {
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: 8px;
+      background: #000;
+      border: 1px solid #333;
+      color: #fff;
+      outline: none;
+    }
+    
+    .todo-input:focus {
+      border-color: #ff0055;
+    }
+    
+    .todo-btn {
+      padding: 12px 20px;
+      background: #ff0055;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .todo-btn:hover {
+      background: #e6004c;
+    }
+    
+    .todo-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .todo-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #232332;
+      padding: 12px 16px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    
+    .todo-item.completed {
+      opacity: 0.6;
+    }
+    
+    .todo-item.completed span {
+      text-decoration: line-through;
+      color: #aaa;
+    }
+    
+    .todo-text {
+      flex: 1;
+      margin-left: 12px;
+      cursor: pointer;
+    }
+    
+    .todo-delete {
+      background: none;
+      border: none;
+      color: #ff4444;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 4px;
+    }
+    
+    .empty-state {
+      text-align: center;
+      color: #777;
+      padding: 20px 0;
+    }
+  </style>
 </head>
 <body>
-  <noscript>
-    <a href="//enable-javascript.com" target="_blank">Enable JavaScript</a>
-  </noscript>
+  
+  <div id="app"></div>
 
-  <script type="module" src="./js/app.js"></script>
+  <!-- We load our component framework from the root path index -->
+  <script type="module">
+    import { Component, html, useState, mount } from '/component/index.js'
+
+    class ToDoApp extends Component {
+      render() {
+        const [todos, setTodos] = useState([
+          { id: 1, text: 'Learn the new Component Framework', completed: true },
+          { id: 2, text: 'Build an awesome app', completed: false }
+        ])
+        
+        const [inputValue, setInputValue] = useState('')
+
+        const handleSubmit = (e) => {
+          e.preventDefault()
+          if (!inputValue.trim()) return
+          
+          setTodos(prev => [
+            ...prev, 
+            { id: Date.now(), text: inputValue.trim(), completed: false }
+          ])
+          setInputValue('')
+        }
+
+        const toggleTodo = (id) => {
+          setTodos(prev => prev.map(t => 
+            t.id === id ? { ...t, completed: !t.completed } : t
+          ))
+        }
+
+        const deleteTodo = (id) => {
+          setTodos(prev => prev.filter(t => t.id !== id))
+        }
+
+        return html`
+          <div class="todo-container">
+            <div class="todo-header">
+              <h1>ToDo's</h1>
+            </div>
+            
+            <form class="todo-form" onsubmit="${handleSubmit}">
+              <input 
+                type="text" 
+                class="todo-input" 
+                placeholder="What needs to be done?" 
+                value="${inputValue}"
+                oninput="${(e) => setInputValue(e.target.value)}"
+              >
+              <button type="submit" class="todo-btn">Add</button>
+            </form>
+            
+            <ul class="todo-list">
+              ${todos.length === 0 ? html`<div class="empty-state">All caught up! 🎉</div>` : ''}
+              
+              ${todos.map(todo => html`
+                <li class="todo-item ${todo.completed ? 'completed' : ''}">
+									<input 
+										type="checkbox" 
+										${todo.completed ? 'checked' : ''} 
+										onchange="${() => toggleTodo(todo.id)}"
+									/>
+                  <span 
+                    class="todo-text" 
+                    onclick="${() => toggleTodo(todo.id)}">
+                    ${todo.text}
+                  </span>
+                  <button 
+                    class="todo-delete" 
+                    onclick="${() => deleteTodo(todo.id)}">
+										Delete
+									</button>
+                </li>
+              `)}
+            </ul>
+          </div>
+        `
+      }
+    }
+
+    mount(ToDoApp, '#app')
+  </script>
 </body>
 </html>
