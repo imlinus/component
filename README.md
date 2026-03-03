@@ -2,16 +2,6 @@
 
 A tiny (~30 KB), zero-dependency reactive UI framework with a React-like hooks API, cooperative scheduling, and native generator-based diffing. Built for the modern browser — **no build steps or bundlers required.**
 
-## Quick Start
-
-```javascript
-import { html, Component, useState, useEffect, functional, mount } from '//js.imlin.us/component'
-```
-
-## Examples
-
-### 1. Stateful Class Component
-
 ```javascript
 import { Component, html, useState, mount } from '//js.imlin.us/component'
 
