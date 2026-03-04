@@ -1,6 +1,6 @@
-# ⚡️ Component Framework
+# Component
 
-A tiny (~30 KB), zero-dependency reactive UI framework with a React-like hooks API, built for the modern browser — **no build steps or bundlers required.**
+A tiny (~30 KB), zero-dependency reactive component framework with a React-like hooks API, built for the modern browser — **no build steps or bundlers required.**
 
 ## Why it's cool
 
@@ -30,7 +30,7 @@ mount(Counter, '#app')
 
 ## Learn by Example
 
-Dive into our curated example apps to see the framework in action:
+Dive into the curated example apps to see the framework in action:
 
 - [**Todo App**](./examples/todo) - The basics: State, lists, and forms.
 - [**Notes App**](./examples/notes) - Advanced: Persistence, functional components, and composition.
@@ -38,4 +38,4 @@ Dive into our curated example apps to see the framework in action:
 
 ---
 
-Made with 💜 by and for imlin.us.
+Made with 💜 by and for imlin.us. But feel free to use it!
