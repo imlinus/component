@@ -12,11 +12,12 @@ A tiny (~30 KB), zero-dependency reactive component framework with a React-like 
 ## Quick Start
 
 ```javascript
-import { html, Component, useState, mount } from '//js.imlin.us/component'
+import { Component, useState, html, mount } from '//js.imlin.us/component'
 
 class Counter extends Component {
   render () {
     const [count, setCount] = useState(0)
+
     return html`
       <button onclick=${() => setCount(count + 1)}>
         Count is: ${count}
