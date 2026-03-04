@@ -1,0 +1,79 @@
+:root {
+  --bg: #fdf6e3;
+  --note-bg: #fff;
+  --accent: #d33682;
+  --text: #586e75;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 2.5rem;
+}
+
+.container {
+  max-width: 50rem;
+  margin: 0 auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.875rem;
+}
+
+button.add-btn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
+  gap: 1.25rem;
+}
+
+.note {
+  background: var(--note-bg);
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.25rem 0.625rem rgba(0,0,0,0.05);
+  position: relative;
+  min-height: 9.375rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.note textarea {
+  flex: 1;
+  border: none;
+  resize: none;
+  background: transparent;
+  font-family: inherit;
+  color: inherit;
+  outline: none;
+}
+
+.note-footer {
+  font-size: 0.8em;
+  color: #93a1a1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.625rem;
+}
+
+.delete-note {
+  color: #dc322f;
+  cursor: pointer;
+  background: none;
+  border: none;
+}

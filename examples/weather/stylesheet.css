@@ -1,0 +1,56 @@
+body {
+  background: linear-gradient(135deg, #00b4db, #0083b0);
+  color: white;
+  font-family: 'Outfit', sans-serif;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(0.625rem);
+  padding: 2.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 18.75rem;
+}
+
+h2 {
+  margin: 0;
+  font-weight: 300;
+}
+
+.temp {
+  font-size: 4rem;
+  font-weight: 700;
+  margin: 1.25rem 0;
+}
+
+.desc {
+  text-transform: capitalize;
+  opacity: 0.8;
+}
+
+.loading {
+  opacity: 0.5;
+  font-style: italic;
+}
+
+input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 0.0625rem solid rgba(255, 255, 255, 0.3);
+  padding: 0.625rem;
+  border-radius: 0.625rem;
+  color: white;
+  margin-top: 1.25rem;
+  width: 80%;
+  outline: none;
+}
+
+::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
