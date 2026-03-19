@@ -46,7 +46,7 @@ class WeatherApp extends Component {
 : ''
         }
         
-        <select onchange="${(e) => setCity(e.target.value)}" style="background: rgba(255,255,255,0.1); color: white; border: 0.0625rem solid rgba(255,255,255,0.3); padding: 0.3125rem; margin-top: 1.25rem; border-radius: 0.3125rem;">
+        <select onchange=${(e) => setCity(e.target.value)} style="background: rgba(255,255,255,0.1); color: white; border: 0.0625rem solid rgba(255,255,255,0.3); padding: 0.3125rem; margin-top: 1.25rem; border-radius: 0.3125rem;">
           <option value="Stockholm">Stockholm</option>
           <option value="Amsterdam">Amsterdam</option>
           <option value="Tokyo">Tokyo</option>

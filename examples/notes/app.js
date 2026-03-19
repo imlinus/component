@@ -4,12 +4,12 @@ const Note = functional(({ note, onUpdate, onDelete }) => {
   return html`
     <div class="note" data-key="${note.id}">
       <textarea 
-        oninput="${(e) => onUpdate(e.target.value)}"
+        oninput=${(e) => onUpdate(e.target.value)}
         placeholder="Write something..."
       >${note.text}</textarea>
       <div class="note-footer">
         <span>${new Date(note.id).toLocaleDateString()}</span>
-        <button class="delete-note" onclick="${onDelete}">Delete</button>
+        <button class="delete-note" onclick=${onDelete}>Delete</button>
       </div>
     </div>
   `
@@ -43,7 +43,7 @@ class NotesApp extends Component {
       <div class="container">
         <header>
           <h1>Notes</h1>
-          <button class="add-btn" onclick="${addNote}">+ New Note</button>
+          <button class="add-btn" onclick=${addNote}>+ New Note</button>
         </header>
 
         <div class="notes-grid">

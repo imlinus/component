@@ -16,7 +16,7 @@ export default function () {
 
   test('html template - function attributes rewritten into data markers', () => {
     const cb = () => {}
-    const tree = html`<button onclick="${cb}">Click</button>`
+    const tree = html`<button onclick=${cb}>Click</button>`
     const renderStr = tree.toString()
     if (!renderStr.includes('data-click="evt_anon_')) {
       throw new Error(`Attribute was not appropriately rewritten: ${renderStr}`)
